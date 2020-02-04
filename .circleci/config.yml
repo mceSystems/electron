@@ -1315,7 +1315,6 @@ commands:
             - *step-get-more-space-on-mac
             - *step-fix-sync-on-mac
             - *step-delete-git-directories
-            - *step-gn-gen-default
 
             # Electron app
             - *step-gn-gen-default

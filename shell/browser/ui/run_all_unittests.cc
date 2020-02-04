@@ -8,10 +8,6 @@
 #include "build/build_config.h"
 
 int main(int argc, char** argv) {
-#if defined(OS_WIN)
-  // Eagerly load advapi32.dll since tests need it.
-  CHECK(::LoadLibrary(L"advapi32.dll"));
-#endif  // defined(OS_WIN)
   base::TestSuite test_suite(argc, argv);
   return base::LaunchUnitTests(
       argc, argv,

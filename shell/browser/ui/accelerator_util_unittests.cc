@@ -8,30 +8,31 @@
 
 namespace accelerator_util {
 
+#if defined(OS_WIN)
 class AcceleratorUtilTest : public ::testing::Test {
   AcceleratorUtilTest() {
-#if defined(OS_WIN)
     // Eagerly load advapi32.dll since tests need it.
     CHECK(::LoadLibrary(L"advapi32.dll"));
+  }
+}
 #endif  // defined(OS_WIN)
-  }
 
-  TEST(AcceleratorUtilTest, StringToAccelerator) {
-    struct {
-      const std::string& description;
-      bool expected_success;
-    } keys[] = {
-        {"♫♫♫♫♫♫♫", false},   {"Cmd+Plus", true}, {"Ctrl+Space", true},
-        {"CmdOrCtrl", false}, {"Alt+Tab", true},  {"AltGr+Backspace", true},
-        {"Super+Esc", true},  {"Super+X", true},  {"Shift+1", true},
-    };
+TEST(AcceleratorUtilTest, StringToAccelerator) {
+  struct {
+    const std::string& description;
+    bool expected_success;
+  } keys[] = {
+      {"♫♫♫♫♫♫♫", false},   {"Cmd+Plus", true}, {"Ctrl+Space", true},
+      {"CmdOrCtrl", false}, {"Alt+Tab", true},  {"AltGr+Backspace", true},
+      {"Super+Esc", true},  {"Super+X", true},  {"Shift+1", true},
+  };
 
-    for (const auto& key : keys) {
-      // Initialize empty-but-not-null accelerator
-      ui::Accelerator out = ui::Accelerator(ui::VKEY_UNKNOWN, ui::EF_NONE);
-      bool success = StringToAccelerator(key.description, &out);
-      EXPECT_EQ(success, key.expected_success);
-    }
+  for (const auto& key : keys) {
+    // Initialize empty-but-not-null accelerator
+    ui::Accelerator out = ui::Accelerator(ui::VKEY_UNKNOWN, ui::EF_NONE);
+    bool success = StringToAccelerator(key.description, &out);
+    EXPECT_EQ(success, key.expected_success);
   }
+}
 
 }  // namespace accelerator_util
